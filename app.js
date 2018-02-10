@@ -1,88 +1,162 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,user-scalable=no">
-  <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Luckiest+Guy" rel="stylesheet">
-  <title>Calculadora</title>
-  <link rel="stylesheet" href="css/estilos.css">
-</head>
-<body>
-  <div class="fondo">
-    <div class="titulo-container">
-      <h1>¡No pierdas <span>la cuenta!</span></h1>
-    </div>
+var numero1=""
+var numero2=""
+var flag=true
+var posicionoperador=""
+var operadores=["mas","menos","por","dividido","igual","on","punto","sign"]
+var simbolo=["+","-","x","/","on"]
+var haypunto1=false
+var haypunto2=false
+var botonesPagina
 
-    <div class="notas-container">
-      <h2>Tus apuntes...</h2>
-      <textarea class="nota-input" placeholder="Escribe aquí..."></textarea>
-    </div>
+function calcular(event){
 
-    <div id="calculadoraFondo">
-      <div class="pantalla">
-        <span id="display">0</span>
-      </div>
+	var botonid = event.target.id
+	
+	if(botonid<=9){
+		if(flag && numero1.length<8 ){
+		numero1=numero1+botonid
+		
+		imprimir(numero1)
+		//console.log("numero1")
+		}
+		else if(!flag && numero2.length<8 ){
+			numero2=numero2+botonid
+			imprimir(numero2)
+		//	console.log("numero2")
+		}
+	}
+	
+	else{
+		for(var i=0;i<8;i++)
+					if(operadores[i]==botonid){
+							switch(i){
+								case 0:
+								case 1:
+								case 2:
+								case 3: imprimir("")
+										flag=false
+										//numero2=numero1
+										//numero1=""
+										posicionoperador=i 
+										haypunto2=false
+										numero2=""
+										//console.log("operacion")
+										break;
+								case 4: botonigual()
+										flag=true
+										break;
+								case 5: borrartodo()
+										haypunto1=false
+										haypunto2=false
+										break;
+								case 6: if(flag){
+											if(!haypunto1){
+												numero1=numero1+"."
+												haypunto1=true
+												imprimir(numero1)
+											}
+										}else if(!haypunto2){
+												numero2=numero2+"."
+												haypunto2=true
+												imprimir(numero2)
+												}
 
-      <div class="teclado">
-        <img src="image/ON.png" alt="On" class="tecla" id="on"/>
-        <img src="image/sign.png" alt="signo" class="tecla" id="sign"/>
-        <img src="image/raiz.png" alt="raiz" class="tecla" id="raiz"/>
-        <img src="image/dividido.png" alt="dividido" class="tecla divide" id="dividido"/>
-
-        <img src="image/7.png" alt="7" class="tecla" id="7"/>
-        <img src="image/8.png" alt="8" class="tecla" id="8"/>
-        <img src="image/9.png" alt="9" class="tecla" id="9"/>
-        <img src="image/por.png" alt="por" class="tecla multiplica" id="por"/>
-
-        <img src="image/4.png" alt="4" class="tecla" id="4"/>
-        <img src="image/5.png" alt="5" class="tecla" id="5"/>
-        <img src="image/6.png" alt="6" class="tecla" id="6"/>
-        <img src="image/menos.png" alt="menos" class="tecla resta" id="menos"/>
-
-        <div class="row">
-          <div class="col1">
-            <img src="image/1.png" alt="1" class="tecla" id="1"/>
-            <img src="image/2.png" alt="2" class="tecla" id="2"/>
-            <img src="image/3.png" alt="3" class="tecla" id="3"/>
-
-            <img src="image/0.png" alt="0" class="tecla" id="0"/>
-            <img src="image/punto.png" alt="punto" class="tecla" id="punto"/>
-            <img src="image/igual.png" alt="igual" class="tecla" id="igual"/>
-          </div>
-          <div class="col2">
-            <img src="image/mas.png" alt="mas" class="tecla suma" id="mas"/>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
-
-
-    <div class="container-libreta">
-      <div class="libreta">
-        <div class="contenido-ingresos">
-          <h3>Ingresos</h3>
-          <ul>
-            <li><span>Salario: </span>$1300.00</li>
-            <li><span>Bonificación: </span>$200.00</li>
-          </ul>
-        </div>
-        <div class="contenido-egresos">
-          <h3>Egresos</h3>
-          <ul>
-            <li><span>Renta: </span>$300.00</li>
-            <li><span>Alimentos: </span>$250.00</li>
-            <li><span>Restaurantes: </span>$120.00</li>
-            <li><span>Automóvil: </span>$100.00</li>
-          </ul>
-        </div>
-      </div>
-    </div>
+										
+										break;
+								case 7: if(flag){
+										numero1=-numero1
+										imprimir(numero1)
 
 
-  </div>
-  <script src="js/app.js"></script>
-</body>
-</html>
+										} else{
+											numero2=-numero2
+											imprimir(numero2)}
+										
+										break;
+
+								default:
+
+
+
+							}
+
+					}
+
+		}
+
+}
+
+function botonigual(){
+	switch(posicionoperador){
+					case 0 :  numero1=Number(Number(numero1)+Number(numero2))
+								break;
+					case 1 :  numero1=Number(Number(numero1)-Number(numero2))
+								break;
+					case 2 :  numero1=Number(Number(numero1)*Number(numero2))
+								break;
+					case 3 :  if(numero2=="0"){
+									numero1=""
+									numero2=""
+									imprimir("infinito")}
+								else
+									numero1=Number(numero1)/Number(numero2)
+								
+								break;
+					default:    
+				}
+	imprimir(numero1);
+
+
+}
+
+function borrartodo() {
+	numero1=""
+	numero2=""
+	imprimir("0")
+	flag=true
+}
+
+function imprimir(e){
+					
+			e = Math.round(e * 10000000) / 10000000
+			e=e.toString()
+			if(e.length>8){
+				e=e.substring(0,8)
+
+			}
+
+			document.getElementById('display').innerHTML=e
+	
+}
+
+function reducir(event){
+	event.target.style="transform : perspective(600px) translateZ(-75px) rotateZ(-0.5deg) rotateX(-10deg);"
+}
+function restaurar(event){
+	event.target.style=""
+}
+
+
+
+//----objeto calculadora----
+
+var calculadora = {
+
+asociarevento : function (){
+
+	botonesPagina = document.getElementsByClassName('tecla');
+    for (var i = 0; i < botonesPagina.length; i++) {
+      botonesPagina[i].onclick=calcular;
+      botonesPagina[i].onmousedown=reducir;
+      botonesPagina[i].onmouseup=restaurar; 
+ 	 }
+	
+}
+
+
+
+}
+
+calculadora.asociarevento()
+
+
