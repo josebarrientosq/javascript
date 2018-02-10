@@ -6,7 +6,6 @@ var operadores=["mas","menos","por","dividido","igual","on","punto","sign"]
 var simbolo=["+","-","x","/","on"]
 var haypunto1=false
 var haypunto2=false
-var botonesPagina
 
 function calcular(event){
 
@@ -143,12 +142,11 @@ function restaurar(event){
 var calculadora = {
 
 asociarevento : function (){
-
-	botonesPagina = document.getElementsByClassName('tecla');
-    for (var i = 0; i < botonesPagina.length; i++) {
-      botonesPagina[i].onclick=calcular;
-      botonesPagina[i].onmousedown=reducir;
-      botonesPagina[i].onmouseup=restaurar; 
+	var botonesPagina = document.getElementsByClassName('tecla');
+    	for (var i = 0; i < botonesPagina.length; i++) {
+     	 	botonesPagina[i].onclick=calcular;
+      		botonesPagina[i].onmousedown=reducir;
+      		botonesPagina[i].onmouseup=restaurar; 
  	 }
 	
 }
